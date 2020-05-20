@@ -4,7 +4,7 @@ import {Text,View, Image, StyleSheet, TextInput, Button, Alert, ScrollView,Touch
 
 
 
-export default function Produtos(){
+export default function Produtos(props){
     return (
     <View style={styles.container}>
         <Image
@@ -16,6 +16,11 @@ export default function Produtos(){
         <Text style={styles.titulo}>Alcool em Gel</Text>
         <Text style={styles.tituloNome}>Quantidade: 80</Text>
         <Text style={styles.tituloNome}>Preço Unidade: R$ 4,50</Text>
+        
+        <TouchableOpacity style={styles.btLogin} onPress = {() => {props.navigation.navigate('Produto')}}>
+					<Text style={styles.submitText}>Login</Text>
+					
+				</TouchableOpacity>
         </View>
 
         
@@ -58,6 +63,14 @@ const styles = StyleSheet.create({
     },
     tituloNome:{
         color: 'gray'
+    },btLogin:{
+        backgroundColor: '#35AAFF',
+		width: '90%',
+		height: 45,
+		alignItems: 'center',
+		justifyContent: 'center',
+        borderRadius: 7,
+        marginBottom: 15
     }
 })
 
