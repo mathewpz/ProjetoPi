@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Text,View, Image, StyleSheet, TouchableOpacity, FlatList, SafeAreaView} from 'react-native';
-import{useSelector} from 'react-redux';
+import{useSelector, useDispatch} from 'react-redux';
 import ProdutoItem from '../Components/ProdutoItem';
 import {Ionicons} from '@expo/vector-icons';
+import * as estoqueActions from '../Store/estoque-actions';
 
 const Produtos = (props) =>{
 
     const produtos = useSelector(estado=>estado.produtos.produtos);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(estoqueActions.listarProdutos())
+    },[dispatch]);
 
     return (
         <SafeAreaView style={styles.container}>
