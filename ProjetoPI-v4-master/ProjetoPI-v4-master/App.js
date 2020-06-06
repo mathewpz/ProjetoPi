@@ -5,6 +5,14 @@ import reduxThunk from 'redux-thunk';
 import estoqueReducer from './Store/estoque-reducer';
 import EstoqueNavigator from './Navegacao/EstoqueNavigator';
 import{init} from './helpers/db';
+import ENV from './env';
+
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
+if(!firebase.apps.length)
+  firebase.initializeApp(ENV)
+
 
 init().then(()=>{
 	console.log("Criação da base ocorreu com sucesso")

@@ -1,7 +1,48 @@
 import React, {useState} from 'react';
 import { StyleSheet, KeyboardAvoidingView, View, Image, TextInput, TouchableOpacity, Text} from 'react-native';
+import ENV from '../env';
+
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
+if(!firebase.apps.length)
+  firebase.initializeApp(ENV)
+
 
 const CadastroLogin = (props)=> {
+	const[email, setEmail] = useState('');
+	const[password, setPassword] = useState('');
+	const[isAuthenticated, setIsAuthenticated] = useState(false);
+
+	const capturarEmail = (email) =>{
+		setEmail(email);
+	}
+
+	const capturarPassword = (password) =>{
+		setPassword(password);
+	}
+	if(isAuthenticated === true){
+		props.navigation.goBack();
+	}
+	const Cadastro = async() =>{
+		try {
+			const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+			setIsAuthenticated(true);
+			alert("Cadastrado com sucesso");
+			//console.log(user);
+			console.log(isAuthenticated);
+		  } catch (error) {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			if (errorCode == 'auth/weak-password') {
+			  alert('The password is too weak.');
+			} else {
+			  alert(errorMessage);
+			}
+			console.log(error);
+		  }
+	  }
+	
 
 	return (
 		<KeyboardAvoidingView style={styles.back}>
@@ -14,34 +55,33 @@ const CadastroLogin = (props)=> {
 
 			<View style={styles.container}>
 				<TextInput
-				placeholder="Email da empresa"
-				autoCorrect={false}
-				onChangeText={()=>{}}
-				style={styles.input}
+					style={styles.input}
+					placeholder="Digite seu email"
+					value={email}
+					onChangeText={capturarEmail}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Digite seu email"
+					value={password}
+					onChangeText={capturarPassword}
 				/>
 
-                <TextInput
+                {/* <TextInput
 				placeholder="CNPJ da empresa"
 				autoCorrect={false}
 				onChangeText={()=>{}}
 				style={styles.input}
-				/>
+				/> */}
 
-                <TextInput
+                {/* <TextInput
 				placeholder="CPF responsável da empresa"
 				autoCorrect={false}
 				onChangeText={()=>{}}
 				style={styles.input}
-				/>
+				/> */}
 
-			<TextInput
-				placeholder="Senha"
-				autoCorrect={false}
-				onChangeText={()=>{}}
-				style={styles.input}
-				/>
-
-			<TouchableOpacity style={styles.btnSubmit} onPress = {() => {props.navigation.navigate('Menu')}}>
+			<TouchableOpacity style={styles.btnSubmit} onPress = {Cadastro}>
 				<Text style={styles.submitText}>Cadastrar</Text>
 				
 			</TouchableOpacity>

@@ -1,8 +1,54 @@
 import React, {useState} from 'react';
 import { StyleSheet, KeyboardAvoidingView, View, Image, TextInput, TouchableOpacity, Text} from 'react-native';
+import ENV from '../env';
 
-const Login = (props) =>{
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
+if(!firebase.apps.length)
+  firebase.initializeApp(ENV)
+
+	const Login = (props) =>{
+	const[email, setEmail] = useState('');
+	const[password, setPassword] = useState('');
+	const[isAuthenticated, setIsAuthenticated] = useState(false);
+
+	const capturarEmail = (email) =>{
+		setEmail(email);
+	}
+
+	const capturarPassword = (password) =>{
+		setPassword(password);
+	}
+	if(isAuthenticated === true){
+		props.navigation.navigate('Produtos');
+	}
+	const login = async() =>{
+		if (email.length < 4) {
+			alert('Please enter an email address.');
+			return;
+		}
+		if (password.length < 4) {
+			alert('Please enter a password.');
+			return;
+		}
+		try {
+			const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+			setIsAuthenticated(true);
+			alert("logado com sucesso");
+			//console.log(user);
+			console.log(isAuthenticated);
+		} catch (error) {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			if (errorCode === 'auth/wrong-password') {
+			  alert('Wrong password.');
+			} else {
+			  alert(errorMessage);
+			}
+			console.log(error);
+		}
+	}
 	return (
 		<KeyboardAvoidingView style={styles.back}>
 
@@ -14,21 +60,19 @@ const Login = (props) =>{
 
 			<View style={styles.container}>
 				<TextInput
-				placeholder="Email"
-				autoCorrect={false}
-				onChangeText={()=>{}}
-				style={styles.input}
+					style={styles.input}
+					placeholder="Digite seu email"
+					value={email}
+					onChangeText={capturarEmail}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Digite seu email"
+					value={password}
+					onChangeText={capturarPassword}
 				/>
 
-			<TextInput
-				placeholder="Senha"
-				secureTextEntry={true}
-				autoCorrect={false}
-				onChangeText={()=>{}}
-				style={styles.input}
-				/>
-
-			<TouchableOpacity style={styles.btnSubmit} onPress = {() => {props.navigation.navigate('Produtos')}}>
+			<TouchableOpacity style={styles.btnSubmit} onPress = {login}>
 				<Text style={styles.submitText}>Acessar</Text>
 				
 			</TouchableOpacity>

@@ -60,6 +60,7 @@ const CadastrarProduto=(props)=> {
 					onChangeText={novoPreco}
 					value={precoProduto}
 					style={styles.input}
+					keyboardType="number-pad"
 				/>
 				<TextInput
 					placeholder="Unidade"
@@ -67,6 +68,7 @@ const CadastrarProduto=(props)=> {
 					onChangeText={novaUnidade}
 					value={unidadeProduto}
 					style={styles.input}
+					keyboardType="number-pad"
 				/>
 				<TextInput
 					placeholder="Código do Produto"
@@ -74,6 +76,7 @@ const CadastrarProduto=(props)=> {
 					onChangeText={novoCodigo}
 					value={codigoProduto}
 					style={styles.input}
+					keyboardType="number-pad"
 				/>
 			<TouchableOpacity style={styles.btnSubmit} onPress = {adicionarProduto}>
 				<Text style={styles.submitText}>Cadastrar Produto</Text>

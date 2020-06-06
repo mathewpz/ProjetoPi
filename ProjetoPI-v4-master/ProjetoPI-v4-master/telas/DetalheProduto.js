@@ -7,7 +7,7 @@ import {Text,View, Image, StyleSheet, TextInput, Button, Alert, ScrollView,Touch
 const DetalheProduto= (props)=>{
     return (
        
-    <View >{DetalheProduto}
+    <ScrollView >{DetalheProduto}
      <Image style={styles.imagem}
        source={{uri:props.navigation.getParam("imagemDoProduto")}}/>
 
@@ -17,8 +17,50 @@ const DetalheProduto= (props)=>{
        <View style={styles.container}>
         <Text style={styles.descricao}>Preço Unidade: R$ {props.navigation.getParam("precoDoProduto")}</Text>
        </View>
+
+       <View style={styles.entrada}>
+        
+        <Text style={styles.titulo}>Diminuir unidade</Text>
+        <TextInput
+        style={styles.entrada}
+        autoCapitalize='none'
+        blurOnSubmit
+        autoCorrect={false}
+        keyboardType="number-pad"
+        maxLenth={2}
+        />
+        <View style={styles.botao}>
+        <Button
+        style={styles.botaoEntrada}
+        title="Confirmar"
+        />
+       
+        </View>
+        
+       </View>
+
+       <View style={styles.entrada}>
+        
+        <Text style={styles.titulo}>Aumentar unidade</Text>
+        <TextInput
+        style={styles.entrada}
+        autoCapitalize='none'
+        blurOnSubmit
+        autoCorrect={false}
+        keyboardType="number-pad"
+        maxLenth={2}
+        
+        />
+        <View style={styles.botao}>
+       
+        <Button
+        style={styles.botaoEntrada}
+        title="Confirmar"/>
+        </View>
+        
+       </View>
     
-    </View>
+    </ScrollView>
     );
 }
 
@@ -45,10 +87,13 @@ const styles = StyleSheet.create({
     },
 
     imagem:{
-        height: 400,
-        width: 400,
+        height: 250,
+        width: 300,
         borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10
+        borderBottomLeftRadius: 10,
+        alignItems: 'center',
+        margin: 50,
+        borderRadius: 8
     },
 
     descricao:{
@@ -62,8 +107,42 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18
     },
-    tituloNome:{
-        color: 'gray'
+
+    entrada:{
+        width: 300,
+        maxWidth: '80%',
+        alignItems: 'center',
+        shadowColor: 'black',
+        shadowOffset:{
+            width: 0,
+            height: 2
+        },
+        shadowRadius: 6,
+        shadowOpacity: 0.32,
+        backgroundColor: 'white',
+        elevation: 4,
+        padding: 12,
+        borderRadius: 8,
+        margin: 50
+    },
+
+    botao:{
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        paddingHorizontal: 15
+    },
+
+    botaoEntrada:{
+        width: 50,
+        textAlign: 'center'
+    },
+
+    text:{
+        height: 30,
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1,
+        marginVertical: 10
     }
 })
 
